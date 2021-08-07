@@ -1,9 +1,9 @@
-import React, { useRef, useCallback } from 'react'
+import React, { useState, useRef, useCallback } from 'react'
 import { v4 as uuidv4 } from 'uuid';
+import './result.css'
 
 
-export default function Result({ photos, hasMore, loading, error, setPageNumber }) {
-
+export const Result = React.memo(({ photos, hasMore, loading, error, setPageNumber, setShowModal, setModalUrl }) => {
 
     const observer = useRef()
     const lastBookElementRef = useCallback(node => {
@@ -18,23 +18,30 @@ export default function Result({ photos, hasMore, loading, error, setPageNumber 
     }, [loading, hasMore])
 
 
+    const showImage = (imageUrl = "") => {
+        setShowModal(true)
+        setModalUrl(imageUrl)
+    }
 
     return (
         <>
-
+            {
+                photos.length <= 0 && !loading && <p>0 results found</p>
+            }
             {photos.map((photo, index) => {
-                let imgUrl = `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_n.jpg`
+                let imageUrl = `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_n.jpg`
                 if (photos.length === index + 1) {
-                    return <div ref={lastBookElementRef} key={photo}><img src={imgUrl} alt="" /></div>
+                    return <div ref={lastBookElementRef} key={photo}><img onClick={() => showImage(imageUrl)} src={imageUrl} alt="" /></div>
                 } else {
-                    return <div key={uuidv4()}><img src={imgUrl} alt="" /></div>
+                    return <div key={uuidv4()}><img onClick={() => showImage(imageUrl)} src={imageUrl} alt="" /></div>
                 }
             })}
             <div>{loading && 'Loading...'}</div>
             <div>{error && 'Error'}</div>
+
         </>
     )
-}
+})
 
 
 
