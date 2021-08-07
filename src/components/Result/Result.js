@@ -35,11 +35,7 @@ export const Result = React.memo(({ photos, hasMore, loading, setPageNumber, set
                     >
                         {photos.map((photo, index) => {
                             let imageUrl = `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_n.jpg`
-                            if (photos.length === index + 1) {
-                                return <div key={photo} className="image-container"><img onClick={() => showImage(imageUrl)} src={imageUrl} alt="" /></div>
-                            } else {
-                                return <div key={uuidv4()} className="image-container"><img onClick={() => showImage(imageUrl)} src={imageUrl} alt="" /></div>
-                            }
+                            return <div key={uuidv4()} className="image-container"><img onClick={() => showImage(imageUrl)} src={imageUrl} alt="" /></div>
                         })}
                     </InfiniteScroll>}
         </div>
@@ -55,9 +51,3 @@ Result.propTypes = {
     setShowModal: PropTypes.func.isRequired,
     setModalUrl: PropTypes.func.isRequired,
 }
-// 4c5fce7e2f1b1032233410afc2c2ea27 key
-// ba60a23e01d27221 secret
-
-// https://www.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=4c5fce7e2f1b1032233410afc2c2ea27&per_page=50&page=1&format=json&nojsoncallback=1
-
-// https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=4c5fce7e2f1b1032233410afc2c2ea27&text=dog&format=json&nojsoncallback=1
