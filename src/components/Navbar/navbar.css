@@ -11,7 +11,7 @@
 .suggestion-box{
     color: black;
     background: white;
-    width: fit-content;
+    width: 400px;
     position: absolute;
     left: 0;
     right: 0;
@@ -19,6 +19,19 @@
     padding: 10px;
 }
 
+.suggestion-box >div > input {
+    padding: 10px;
+    width: 400px;
+}
 .suggestion-box > p {
     border-bottom: thin solid black;
+}
+
+.suggestion-box > button {
+    border: none;
+    color: white;
+    font-weight: bold;
+    background: red;
+    padding: 10px;
+    width: 250px;
 }
