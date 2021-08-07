@@ -1,4 +1,5 @@
-import React, { useState, useRef, useCallback } from 'react'
+import React, { useRef, useCallback } from 'react'
+import { v4 as uuidv4 } from 'uuid';
 
 
 export default function Result({ photos, hasMore, loading, error, setPageNumber }) {
@@ -26,7 +27,7 @@ export default function Result({ photos, hasMore, loading, error, setPageNumber 
                 if (photos.length === index + 1) {
                     return <div ref={lastBookElementRef} key={photo}><img src={imgUrl} alt="" /></div>
                 } else {
-                    return <div key={photo}>{console.log(photo)}<img src={imgUrl} alt="" /></div>
+                    return <div key={uuidv4()}><img src={imgUrl} alt="" /></div>
                 }
             })}
             <div>{loading && 'Loading...'}</div>

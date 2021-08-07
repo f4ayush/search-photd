@@ -1,15 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Navbar({ query, setQuery, setPageNumber }) {
-    function handleSearch(e) {
+    const [suggestions, setSuggestions] = useState(JSON.parse(localStorage.getItem("searchHistory")))
+    const [isClicked, setIsClicked] = useState(false)
+    const handleSearch = (e) => {
         setQuery(e.target.value)
         setPageNumber(1)
+    }
+
+    const showSuggestions = () => {
+        if (suggestions !== null) setIsClicked(true)
+        // console.log(suggestions)
     }
     return (
         <div>
             <h3>Search Photos</h3>
             <div>
-                <input type="text" value={query} onChange={handleSearch}></input>
+                <input type="text" value={query} onClick={showSuggestions} onChange={handleSearch}></input>
+                {isClicked &&
+                    <div className="suggestion-box">
+                        {suggestions.map(suggestion => <p key={uuidv4()} onClick={() => setQuery(suggestion)}>{suggestion}</p>)}
+                        <button onClick={() => setIsClicked(false)}>close</button>
+                    </div>
+                }
             </div>
         </div>
     )

@@ -15,7 +15,7 @@ export default function usePhotoSearch(query, pageNumber = 1) {
   useEffect(() => {
     setLoading(true)
     setError(false)
-    let cancel
+    let cancel, searchHistory
     let method = query === "" ? "flickr.photos.getRecent" : "flickr.photos.search"
     axios({
       method: 'GET',
@@ -23,13 +23,19 @@ export default function usePhotoSearch(query, pageNumber = 1) {
       params: { method: method, api_key: "4c5fce7e2f1b1032233410afc2c2ea27", page: pageNumber, text: query, format: "json", nojsoncallback: 1 },
       cancelToken: new axios.CancelToken(c => cancel = c)
     }).then(res => {
-      console.log(res)
+      if (query !== "") {
+        searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || []
+        searchHistory.push(query)
+        searchHistory = [...new Set(searchHistory)]
+        localStorage.setItem("searchHistory", JSON.stringify(searchHistory))
+      }
       setPhotos(prevPhotos => {
         return [...new Set([...prevPhotos, ...res.data.photos.photo])]
       })
       setHasMore(res.data.photos.photo.length > 0)
       setLoading(false)
     }).catch(e => {
+      console.log(e)
       if (axios.isCancel(e)) return
       setError(true)
     })
