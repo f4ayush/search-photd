@@ -12,6 +12,9 @@ export default function Navbar({ query, setQuery, setPageNumber }) {
 
     const showSuggestions = () => {
         if (suggestions !== null) setIsClicked(true)
+        setTimeout(() => {
+            setIsClicked(false)
+        }, 1500)
     }
     return (
         <nav className="navbar">

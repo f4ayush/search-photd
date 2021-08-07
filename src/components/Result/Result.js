@@ -1,26 +1,18 @@
 import React, { useState, useRef, useCallback } from 'react'
 import { v4 as uuidv4 } from 'uuid';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import './result.css'
 
 
 export const Result = React.memo(({ photos, hasMore, loading, error, setPageNumber, setShowModal, setModalUrl }) => {
 
-    const observer = useRef()
-    const lastBookElementRef = useCallback(node => {
-        if (loading) return
-        if (observer.current) observer.current.disconnect()
-        observer.current = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting && hasMore) {
-                setPageNumber(prevPageNumber => prevPageNumber + 1)
-            }
-        })
-        if (node) observer.current.observe(node)
-    }, [loading, hasMore])
-
-
     const showImage = (imageUrl = "") => {
         setShowModal(true)
         setModalUrl(imageUrl)
+    }
+
+    const fetchMoreData = () => {
+        setPageNumber((pageNumber) => pageNumber + 1)
     }
 
     return (
@@ -28,17 +20,28 @@ export const Result = React.memo(({ photos, hasMore, loading, error, setPageNumb
             {
                 photos.length <= 0 && !loading && <p>0 results found</p>
             }
-            {photos.map((photo, index) => {
-                let imageUrl = `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_n.jpg`
-                if (photos.length === index + 1) {
-                    return <div ref={lastBookElementRef} key={photo} className="image-container"><img onClick={() => showImage(imageUrl)} src={imageUrl} alt="" /></div>
-                } else {
-                    return <div key={uuidv4()} className="image-container"><img onClick={() => showImage(imageUrl)} src={imageUrl} alt="" /></div>
-                }
-            })}
-            <div>{loading && 'Loading...'}</div>
-            <div>{error && 'Error'}</div>
 
+            <InfiniteScroll
+                style={{ width: "100%", display: "flex", justifyContent: "space-evenly", flexWrap: "wrap" }}
+                dataLength={photos.length}
+                next={fetchMoreData}
+                hasMore={hasMore}
+                loader={<h4>Loading...</h4>}
+                endMessage={
+                    <p style={{ textAlign: 'center' }}>
+                        <b>Yay! You have seen it all</b>
+                    </p>
+                }
+            >
+                {photos.map((photo, index) => {
+                    let imageUrl = `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_n.jpg`
+                    if (photos.length === index + 1) {
+                        return <div key={photo} className="image-container"><img onClick={() => showImage(imageUrl)} src={imageUrl} alt="" /></div>
+                    } else {
+                        return <div key={uuidv4()} className="image-container"><img onClick={() => showImage(imageUrl)} src={imageUrl} alt="" /></div>
+                    }
+                })}
+            </InfiniteScroll>
         </div>
     )
 })
