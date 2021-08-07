@@ -1,7 +1,10 @@
-# Getting Started with Create React App
+# Photo Search App
+
+![Photo Search App Image](photo-search.png)
 
 This project is made for the hiring process of MindPeers.
 
+To visit the deployed code, click [here](https://search-photo-liart.vercel.app/)
 
 ## To run the project
 
