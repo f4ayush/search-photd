@@ -24,22 +24,22 @@ export const Result = React.memo(({ photos, hasMore, loading, error, setPageNumb
     }
 
     return (
-        <>
+        <div className="result-container">
             {
                 photos.length <= 0 && !loading && <p>0 results found</p>
             }
             {photos.map((photo, index) => {
                 let imageUrl = `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_n.jpg`
                 if (photos.length === index + 1) {
-                    return <div ref={lastBookElementRef} key={photo}><img onClick={() => showImage(imageUrl)} src={imageUrl} alt="" /></div>
+                    return <div ref={lastBookElementRef} key={photo} className="image-container"><img onClick={() => showImage(imageUrl)} src={imageUrl} alt="" /></div>
                 } else {
-                    return <div key={uuidv4()}><img onClick={() => showImage(imageUrl)} src={imageUrl} alt="" /></div>
+                    return <div key={uuidv4()} className="image-container"><img onClick={() => showImage(imageUrl)} src={imageUrl} alt="" /></div>
                 }
             })}
             <div>{loading && 'Loading...'}</div>
             <div>{error && 'Error'}</div>
 
-        </>
+        </div>
     )
 })
 

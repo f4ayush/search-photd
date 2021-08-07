@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
+import "./navbar.css"
 
 export default function Navbar({ query, setQuery, setPageNumber }) {
     const [suggestions, setSuggestions] = useState(JSON.parse(localStorage.getItem("searchHistory")))
@@ -13,17 +14,17 @@ export default function Navbar({ query, setQuery, setPageNumber }) {
         if (suggestions !== null) setIsClicked(true)
     }
     return (
-        <div>
+        <nav className="navbar">
             <h3>Search Photos</h3>
             <div>
-                <input type="text" value={query} onClick={showSuggestions} onChange={handleSearch}></input>
+                <input type="text" placeholder="Enter keyword to search" value={query} onClick={showSuggestions} onChange={handleSearch}></input>
                 {isClicked &&
-                    <div className="suggestion-box">
+                    <div className="suggestion-box" onClick={() => setIsClicked(false)}>
                         {suggestions.map(suggestion => <p key={uuidv4()} onClick={() => setQuery(suggestion)}>{suggestion}</p>)}
                         <button onClick={() => setIsClicked(false)}>close</button>
                     </div>
                 }
             </div>
-        </div>
+        </nav>
     )
 }

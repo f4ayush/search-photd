@@ -20,7 +20,7 @@ export default function usePhotoSearch(query, pageNumber = 1) {
     axios({
       method: 'GET',
       url: 'https://www.flickr.com/services/rest/',
-      params: { method: method, api_key: "4c5fce7e2f1b1032233410afc2c2ea27", page: pageNumber, text: query, format: "json", nojsoncallback: 1 },
+      params: { method: method, api_key: "4c5fce7e2f1b1032233410afc2c2ea27", per_page: 50, page: pageNumber, text: query, format: "json", nojsoncallback: 1 },
       cancelToken: new axios.CancelToken(c => cancel = c)
     }).then(res => {
       if (query !== "") {
@@ -30,7 +30,7 @@ export default function usePhotoSearch(query, pageNumber = 1) {
         localStorage.setItem("searchHistory", JSON.stringify(searchHistory))
       }
       setPhotos(prevPhotos => {
-        return [...new Set([...prevPhotos, ...res.data.photos.photo])]
+        return [...prevPhotos, ...res.data.photos.photo]
       })
       setHasMore(res.data.photos.photo.length > 0)
       setLoading(false)
