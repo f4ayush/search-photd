@@ -18,9 +18,6 @@ function App() {
     error
   } = usePhotoSearch(query, pageNumber)
 
-  // useEffect(() => {
-  //   setSuggestions(JSON.parse(localStorage.getItem("searchHistory")))
-  // }, [JSON.parse(localStorage.getItem("searchHistory"))])
   return (
     <div className="App">
       <Navbar setQuery={setQuery} query={query} setPageNumber={setPageNumber} />
