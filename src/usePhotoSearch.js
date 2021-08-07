@@ -6,7 +6,6 @@ export default function usePhotoSearch(query, pageNumber = 1) {
   const [error, setError] = useState(false)
   const [photos, setPhotos] = useState([])
   const [hasMore, setHasMore] = useState(false)
-  // const [method, setMethod] = useState("flickr.photos.getRecent")
 
   useEffect(() => {
     setPhotos([])
@@ -35,7 +34,6 @@ export default function usePhotoSearch(query, pageNumber = 1) {
       setHasMore(res.data.photos.photo.length > 0)
       setLoading(false)
     }).catch(e => {
-      console.log(e)
       if (axios.isCancel(e)) return
       setError(true)
     })
