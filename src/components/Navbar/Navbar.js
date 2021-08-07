@@ -11,7 +11,6 @@ export default function Navbar({ query, setQuery, setPageNumber }) {
 
     const showSuggestions = () => {
         if (suggestions !== null) setIsClicked(true)
-        // console.log(suggestions)
     }
     return (
         <div>
