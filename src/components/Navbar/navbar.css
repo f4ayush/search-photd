@@ -17,9 +17,11 @@
     right: 0;
     margin: auto;
     padding: 10px;
+    max-height: 250px;
+    overflow-y: scroll;
 }
 
-.suggestion-box >div > input {
+nav >div > input {
     padding: 10px;
     width: 400px;
 }
@@ -32,6 +34,15 @@
     color: white;
     font-weight: bold;
     background: red;
-    padding: 10px;
-    width: 250px;
+    position: absolute;
+    text-align: center;
+    top: 2px;
+    right: 5px;
+}
+
+@media (max-width: 456px){
+    nav >div > input, .suggestion-box{
+        width: 300px;
+    }
+
 }

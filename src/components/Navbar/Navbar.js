@@ -27,7 +27,7 @@ export default function Navbar({ query, setQuery, setPageNumber }) {
                                 return <p key={uuidv4()} onClick={() => setQuery(suggestion)}>{suggestion}</p>
                             })
                         }
-                        <button onClick={() => setIsClicked(false)}>close</button>
+                        <button onClick={() => setIsClicked(false)}>X</button>
                     </div>
                 }
             </div>
